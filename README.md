@@ -1,27 +1,49 @@
-# ProjectManagerUi
+# project-manager-ui
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.4.
+If you are running the application from localhost/Docker(@latest version), the url needed to be hit to access the application is - http://localhost:4200
 
-## Development server
+If you are running the application from Docker Tool Box for windows (for older windows versions), the url needed to be hit to access the application is - http://192.168.99.100:4200
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## The following should be executed only when your service layer is up and running:
+-----------------------
+	{{baseurl}} = the context url with dns and port and application context
+	
+	Example - 
+		Local PC/Docker - http://localhost:8080/projectmanagerbackend/
+		Docker Tool Box for older windows - http://192.168.99.100:8080/projectmanagerbackend/
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+#### IF DATABASE IS EMPTY WE NEED TO hit the following services in the order given
+-----------------------
+###### The following services can be hit from Browser as well after bringing up the service, since, they are normal GET methods. The POSTMAN Collection can be imported into POSTMAN from the location - 
 
-## Running unit tests
+####### project-manager-backend/other-resources/postman-import-json_for_docker_toolbox/
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+####### project-manager-backend/other-resources/postman-import-json_for_localhost/
 
-## Running end-to-end tests
+	{{baseurl}}user/dump
+	{{baseurl}}parent/dump
+	{{baseurl}}project/dump
+	{{baseurl}}task/dump
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Information on docker commands and execution -
+# First Step - Go to UI project root folder and execute the build command: ng build [-or-] ng build --prod
 
-## Further help
+Docker for UI Layer - PROJECT MANAGER Project
+-----------------------------------------------------------------------
+General Commands to be executed in Docker related to push/build/run- 
+=======================================================================
+	docker build -t your_image_name your_repo_url
+	docker tag your_image_name docker_username/your_image_name
+	docker push your_image_name docker_username/your_image_name
+	docker run -d -p 80:80/tcp -p 80:80/udp --name your_image_name your_image_id_value
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+Example for push/build/run- 
+=======================================================================
+	docker build -t project-manager-ui https://github.com/fsduseriiht/project-manager-ui.git
+	docker tag project-manager-ui amitabhadockerwork/project-manager-ui
+	docker push amitabhadockerwork/project-manager-ui
+	docker run -d -p 80:80/tcp -p 80:80/udp --name project-manager-ui_running <your_image_id_value>
